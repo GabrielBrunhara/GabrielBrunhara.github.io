@@ -1,1 +1,76 @@
-Hello World
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lolzin hoje?</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #ff007f;
+    }
+    #mensagem {
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    user-select: none; /* torna o texto não selecionável */
+    }
+
+    #botoes {
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+    }
+    .botao {
+        padding: 10px 20px;
+        margin: 0 10px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none; /* remove o sublinhado */
+        color: inherit; /* garante que a cor do texto seja herdada */
+        z-index: 0; /* garante que os botões fiquem abaixo do texto */
+    }
+    .botao-sim {
+        background-color: green;
+        color: white;
+        border: none;
+    }
+    .botao-nao {
+        background-color: red;
+        color: white;
+        border: none;
+    }
+</style>
+</head>
+<body>
+<div id="mensagem">Lolzin hoje?</div>
+<div id="botoes">
+    <a href="https://www.youtube.com./watch?v=RZQCKJhtaOY" target="_blank" class="botao botao-sim">Sim</a>
+    <button class="botao botao-nao" onmouseover="trocarPosicao()">Não</button>
+</div>
+
+<script>
+    function trocarPosicao() {
+        const botaoNao = document.querySelector('.botao-nao');
+        const mensagem = document.querySelector('#mensagem');
+        const posX = Math.random() * (window.innerWidth - botaoNao.clientWidth);
+        const posY = Math.random() * (window.innerHeight - botaoNao.clientHeight);
+        botaoNao.style.position = 'absolute';
+        botaoNao.style.left = posX + 'px';
+        botaoNao.style.top = posY + 'px';
+    }
+</script>
+</body>
+</html>
