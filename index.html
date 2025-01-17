@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +14,6 @@
             margin: 0;
             background-color: #f0f8ff;
         }
-
         .container {
             text-align: center;
             background: #fff;
@@ -23,7 +21,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         input {
             margin: 10px 0;
             padding: 10px;
@@ -31,7 +28,6 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -41,11 +37,9 @@
             border-radius: 4px;
             cursor: pointer;
         }
-
         button:hover {
             background-color: #0056b3;
         }
-
         .timer {
             margin-top: 20px;
             font-size: 24px;
@@ -53,15 +47,14 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Timer de Meditação</h1>
         <label for="totalTime">Tempo total de meditação (minutos):</label>
-        <input type="number" id="totalTime" min="1" placeholder="Ex: 20">
+        <input type="number" id="totalTime" placeholder="Ex: 20">
         <br>
         <label for="intervalTime">Intervalo para tocar o sino (minutos):</label>
-        <input type="number" id="intervalTime" min="1" placeholder="Ex: 5">
+        <input type="number" id="intervalTime" placeholder="Ex: 5">
         <br>
         <button onclick="startTimer()">Iniciar Meditação</button>
         <div class="timer" id="timerDisplay">00:00</div>
@@ -76,8 +69,8 @@
             const totalTimeInput = document.getElementById('totalTime').value;
             const intervalTimeInput = document.getElementById('intervalTime').value;
 
-            const totalTime = parseInt(totalTimeInput) * 60; // Convertendo para segundos
-            const intervalTime = parseInt(intervalTimeInput) * 60; // Convertendo para segundos
+            const totalTime = parseFloat(totalTimeInput) * 60; // Convertendo para segundos
+            const intervalTime = parseFloat(intervalTimeInput) * 60; // Convertendo para segundos
 
             if (isNaN(totalTime) || isNaN(intervalTime) || totalTime <= 0 || intervalTime <= 0) {
                 alert('Por favor, insira valores válidos para o tempo.');
@@ -88,12 +81,17 @@
 
             const audio = document.getElementById('sinoAudio');
             let timeLeft = totalTime;
-            let nextChime = intervalTime;
+            let nextChimeTimes = [];
+
+            // Prepara os momentos exatos para os sinos
+            for (let t = intervalTime; t < totalTime; t += intervalTime) {
+                nextChimeTimes.push(totalTime - t);
+            }
 
             function updateDisplay() {
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
-                document.getElementById('timerDisplay').textContent =
+                document.getElementById('timerDisplay').textContent = 
                     `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
             }
 
@@ -122,9 +120,9 @@
                         audio.play(); // Sino final
                     }
 
-                    if (timeLeft === nextChime) {
+                    // Toca o sino se o tempo restante coincidir com os intervalos
+                    if (nextChimeTimes.includes(timeLeft)) {
                         audio.play();
-                        nextChime = timeLeft - intervalTime;
                     }
 
                     updateDisplay();
@@ -133,5 +131,4 @@
         }
     </script>
 </body>
-
 </html>
